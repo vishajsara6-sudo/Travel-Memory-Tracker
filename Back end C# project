@@ -1,0 +1,97 @@
+using System;
+using System.Collections.Generic;
+
+class TravelMemory
+{
+    public string Place { get; set; }
+    public string Note { get; set; }
+}
+
+class Program
+{
+    static List<TravelMemory> memories = new List<TravelMemory>();
+
+    static void Main()
+    {
+        while (true)
+        {
+            Console.Clear();
+
+            Console.WriteLine("=== TRAVEL MEMORY TRACKER ===");
+            Console.WriteLine("1. Add Memory");
+            Console.WriteLine("2. View Memories");
+            Console.WriteLine("3. Exit");
+            Console.Write("\nChoose: ");
+
+            string choice = Console.ReadLine();
+
+            switch (choice)
+            {
+                case "1":
+                    AddMemory();
+                    break;
+
+                case "2":
+                    ViewMemories();
+                    break;
+
+                case "3":
+                    return;
+
+                default:
+                    Console.WriteLine("Invalid option.");
+                    Pause();
+                    break;
+            }
+        }
+    }
+
+    static void AddMemory()
+    {
+        Console.Clear();
+
+        Console.Write("Place visited: ");
+        string place = Console.ReadLine();
+
+        Console.Write("Memory/Notes: ");
+        string note = Console.ReadLine();
+
+        memories.Add(new TravelMemory
+        {
+            Place = place,
+            Note = note
+        });
+
+        Console.WriteLine("\nMemory saved!");
+        Pause();
+    }
+
+    static void ViewMemories()
+    {
+        Console.Clear();
+
+        Console.WriteLine("=== YOUR MEMORIES ===\n");
+
+        if (memories.Count == 0)
+        {
+            Console.WriteLine("No memories saved.");
+        }
+        else
+        {
+            for (int i = 0; i < memories.Count; i++)
+            {
+                Console.WriteLine($"{i + 1}. {memories[i].Place}");
+                Console.WriteLine($"   {memories[i].Note}");
+                Console.WriteLine();
+            }
+        }
+
+        Pause();
+    }
+
+    static void Pause()
+    {
+        Console.WriteLine("\nPress Enter to continue...");
+        Console.ReadLine();
+    }
+}
