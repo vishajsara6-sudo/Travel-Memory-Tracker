@@ -1,0 +1,162 @@
+using System;
+using System.Collections.Generic;
+using System.Threading;
+
+class TravelMemory
+{
+    public string Place { get; set; }
+    public string Note { get; set; }
+    public DateTime DateVisited { get; set; }
+}
+
+class Program
+{
+    static List<TravelMemory> memories = new List<TravelMemory>();
+
+    static void Main()
+    {
+        Console.Title = "Travel Memory Tracker";
+
+        Console.ForegroundColor = ConsoleColor.Cyan;
+
+        Console.WriteLine(@"
+==========================================
+        🌍 TRAVEL MEMORY TRACKER 🌍
+==========================================
+");
+
+        Console.ForegroundColor = ConsoleColor.White;
+        Console.WriteLine("Welcome!");
+        Console.WriteLine("Save your favorite travel memories.");
+        Thread.Sleep(1500);
+
+        while (true)
+        {
+            Console.Clear();
+
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine("==================================");
+            Console.WriteLine("      🌍 TRAVEL MEMORY TRACKER");
+            Console.WriteLine("==================================");
+
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("1. Add Memory");
+
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("2. View Memories");
+
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("3. Exit");
+
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Write("\nChoose an option: ");
+
+            string choice = Console.ReadLine();
+
+            switch (choice)
+            {
+                case "1":
+                    AddMemory();
+                    break;
+
+                case "2":
+                    ViewMemories();
+                    break;
+
+                case "3":
+                    Goodbye();
+                    return;
+
+                default:
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("\nInvalid option!");
+                    Pause();
+                    break;
+            }
+        }
+    }
+
+    static void AddMemory()
+    {
+        Console.Clear();
+
+        Console.ForegroundColor = ConsoleColor.Cyan;
+        Console.WriteLine("=== ADD A MEMORY ===\n");
+
+        Console.ForegroundColor = ConsoleColor.White;
+        Console.Write("📍 Place visited: ");
+        string place = Console.ReadLine();
+
+        Console.Write("📝 Memory / Notes: ");
+        string note = Console.ReadLine();
+
+        memories.Add(new TravelMemory
+        {
+            Place = place,
+            Note = note,
+            DateVisited = DateTime.Now
+        });
+
+        Console.ForegroundColor = ConsoleColor.Green;
+        Console.WriteLine("\n✓ Memory saved successfully!");
+
+        Pause();
+    }
+
+    static void ViewMemories()
+    {
+        Console.Clear();
+
+        Console.ForegroundColor = ConsoleColor.Cyan;
+        Console.WriteLine("=== YOUR TRAVEL MEMORIES ===\n");
+
+        if (memories.Count == 0)
+        {
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("No memories saved yet.");
+        }
+        else
+        {
+            for (int i = 0; i < memories.Count; i++)
+            {
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.WriteLine($"📍 Destination: {memories[i].Place}");
+
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine($"📝 Notes: {memories[i].Note}");
+
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine($"📅 Saved: {memories[i].DateVisited:dd/MM/yyyy HH:mm}");
+
+                Console.ForegroundColor = ConsoleColor.DarkGray;
+                Console.WriteLine("--------------------------------------");
+            }
+        }
+
+        Pause();
+    }
+
+    static void Goodbye()
+    {
+        Console.Clear();
+
+        Console.ForegroundColor = ConsoleColor.Magenta;
+
+        Console.WriteLine(@"
+==================================
+     THANK YOU FOR USING
+     TRAVEL MEMORY TRACKER
+==================================
+");
+
+        Console.ForegroundColor = ConsoleColor.White;
+        Thread.Sleep(1500);
+    }
+
+    static void Pause()
+    {
+        Console.ForegroundColor = ConsoleColor.Gray;
+        Console.WriteLine("\nPress Enter to continue...");
+        Console.ReadLine();
+    }
+}
